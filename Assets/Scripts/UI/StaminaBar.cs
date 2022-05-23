@@ -1,18 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class StaminaBar : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private Slider _slider;
+    private Person _person;
+
+    private void Awake()
     {
-        
+        _slider = GetComponent<Slider>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Init(Person person)
     {
-        
+        _person = person;
+        OnStaminaChanged(_person.Stamina);
+        if (_person != null)
+        {
+            Debug.Log("GJL");
+            _person.ChangeStamina += OnStaminaChanged;
+        }
+    }
+
+
+    private void OnDisable()
+    {
+        if (_person != null)
+            _person.ChangeStamina -= OnStaminaChanged;
+    }
+
+    private void OnStaminaChanged(int health)
+    {
+        _slider.DOValue((float)health / 100f, 1f);
     }
 }

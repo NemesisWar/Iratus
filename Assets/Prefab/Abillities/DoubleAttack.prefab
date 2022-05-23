@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animationReferenceAsset: {fileID: 11400000, guid: 8246250f38d0bae45868687d03513730, type: 2}
-  _image: {fileID: 0}
+  _sprite: {fileID: 21300000, guid: 80455e61fe62a854ebe96b76c001ccdf, type: 3}
   _name: Double Attack
   _description: Using a lot of stamina
   _isBaff: 0

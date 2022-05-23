@@ -112,6 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: 100
   _stamina: 100
+  _skeletonGraphic: {fileID: 5429131185122384946}
   _abilities:
   - {fileID: -2559305736167126078, guid: e0dcd86bfdd74f04fb73cda836862efa, type: 3}
   - {fileID: -2361520172519423241, guid: 38fa5c2b89027824a89e38ec951c5410, type: 3}

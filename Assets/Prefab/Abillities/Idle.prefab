@@ -43,8 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10b5c65daaea7d046a74a589c139f3ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animationReferenceAsset: {fileID: 0}
-  _image: {fileID: 0}
+  _animationReferenceAsset: {fileID: 11400000, guid: baad0bb604b9174439d256a9e919b17c, type: 2}
+  _sprite: {fileID: 21300000, guid: de674b17b1b764e4f8bfba5819b67aec, type: 3}
   _name: Idle
   _description: Scip round for renegate stamina
   _isBaff: 1

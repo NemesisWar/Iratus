@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animationReferenceAsset: {fileID: 11400000, guid: 165da927fd01e734ea8d7cee60d5e748, type: 2}
-  _image: {fileID: 0}
+  _sprite: {fileID: 21300000, guid: 1dceeb521e665a64ba4f2b8ab74089bd, type: 3}
   _name: Standart Attack
   _description: "\u041Ene sword strike"
   _isBaff: 0
