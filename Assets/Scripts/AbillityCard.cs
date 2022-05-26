@@ -10,7 +10,7 @@ public class AbillityCard : MonoBehaviour, IPointerClickHandler
     public event UnityAction<Abillity> ChoosenAbility;
     private Image _image;
     private Text _text;
-    private Abillity _abillity;
+    [SerializeField]private Abillity _abillity;
 
     private void Awake()
     {

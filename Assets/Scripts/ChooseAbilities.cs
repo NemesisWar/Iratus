@@ -4,14 +4,23 @@ using UnityEngine;
 
 public class ChooseAbilities : MonoBehaviour
 {
-    [SerializeField] private FighterChoose _fighterChoose;
-    private List<ChooseCharacter> _chooseCharacters = new List<ChooseCharacter> ();
+    public List<AbillityCard> AbillityCards => _abillityCards;
+    [SerializeField] private GameObject _mainPanel;
+    private List<CharacterCard> _characters = new List<CharacterCard> ();
     private List<AbillityCard> _abillityCards = new List<AbillityCard> ();
 
     private void Awake()
     {
-        _chooseCharacters.AddRange(_fighterChoose.GetComponentsInChildren<ChooseCharacter>());
+        _characters.AddRange(_mainPanel.GetComponentsInChildren<CharacterCard>());
         _abillityCards.AddRange(GetComponentsInChildren<AbillityCard>());
+    }
+
+    private void OnEnable()
+    {
+        foreach (var character in _characters)
+        {
+            character.ChoosedPerson += ShowAllAbilities;
+        }
     }
 
     private void Start()
@@ -19,19 +28,11 @@ public class ChooseAbilities : MonoBehaviour
         HideAllAbillityCard();
     }
 
-    private void OnEnable()
-    {
-        foreach (var character in _chooseCharacters)
-        {
-            character.Choose += ShowAllAbilities;
-        }
-    }
-
     private void OnDisable()
     {
-        foreach (var character in _chooseCharacters)
+        foreach (var character in _characters)
         {
-            character.Choose -= ShowAllAbilities;
+            character.ChoosedPerson -= ShowAllAbilities;
         }
     }
 

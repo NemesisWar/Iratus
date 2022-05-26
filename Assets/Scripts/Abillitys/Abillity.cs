@@ -8,7 +8,10 @@ public class Abillity : MonoBehaviour
 {
     public Sprite Sprite => _sprite;
     public string Name => _name;
-
+    public bool IsBaf => _isBaff;
+    public int Damage => _damage;
+    public int UseStamina => _useStamina;
+    public AnimationReferenceAsset AnimationReferenceAsset => _animationReferenceAsset;
     [SerializeField] private AnimationReferenceAsset _animationReferenceAsset;
     [SerializeField] private Sprite _sprite;
     [SerializeField] private string _name;
@@ -19,33 +22,4 @@ public class Abillity : MonoBehaviour
     [SerializeField] private SkeletonGraphic SkeletonGraphic;
     private Person _person;
 
-    private void Start()
-    {
-        SkeletonGraphic = GetComponentInParent<SkeletonGraphic>();
-        _person = GetComponent<Person>(); 
-    }
-
-    public void Init(SkeletonGraphic skeletonGraphic, Person person)//времянка
-    {
-        SkeletonGraphic = skeletonGraphic;
-        _person = person;
-    }
-
-    public void Use(Person enemy)
-    {
-        PlayAnimation(_animationReferenceAsset, false, 1f);
-        enemy.TakeDamage(_damage);
-        _person.SpendStamina(_useStamina);
-    }
-
-    private void PlayAnimation(AnimationReferenceAsset animation, bool loop, float timeScale)
-    {
-        SkeletonGraphic.AnimationState.SetAnimation(0, animation, loop).TimeScale = timeScale;
-    }
-
-    public void Use()
-    {
-        PlayAnimation(_animationReferenceAsset, false, 1f);
-        _person.SpendStamina(_useStamina);
-    }
 }

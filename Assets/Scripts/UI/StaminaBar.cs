@@ -20,7 +20,6 @@ public class StaminaBar : MonoBehaviour
         OnStaminaChanged(_person.Stamina);
         if (_person != null)
         {
-            Debug.Log("GJL");
             _person.ChangeStamina += OnStaminaChanged;
         }
     }

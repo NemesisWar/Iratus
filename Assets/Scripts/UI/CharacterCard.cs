@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
-
-public class CharacterCard : MonoBehaviour
+public class CharacterCard : MonoBehaviour, IPointerClickHandler
 {
+    public event UnityAction<CharacterCard> ChooseCard;
     public event UnityAction<Person> ChoosedPerson;
-
+    [SerializeField] public Person PersonInThisCell => _personInThisCell;
     [SerializeField] private Person _character;
-    private ChooseCharacter _personPlace;
-    private Person _choosedPerson;
+    [SerializeField] private GameObject _container;
+    private Person _personInThisCell;
     private HeathBar _healthBar;
     private StaminaBar _staminaBar;
 
@@ -19,14 +20,8 @@ public class CharacterCard : MonoBehaviour
     {
         _healthBar = GetComponentInChildren<HeathBar>();
         _staminaBar = GetComponentInChildren<StaminaBar>();
-        _personPlace = GetComponentInChildren<ChooseCharacter>();
-        _personPlace.Choose += OnChoose;
     }
 
-    private void OnDisable()
-    {
-        _personPlace.Choose += OnChoose;
-    }
 
     private void Start()
     {
@@ -36,17 +31,18 @@ public class CharacterCard : MonoBehaviour
 
     public void Init()
     {
-        Person person =  Instantiate(_character, _personPlace.transform);
-        _personPlace.SetPerson(person);
-        _healthBar.Init(person);
-        _staminaBar.Init(person);
-        person.Init();
-        person.Abillities[0].Use(); // Времянка
+        _personInThisCell =  Instantiate(_character, _container.transform);
+        _healthBar.Init(_personInThisCell);
+        _staminaBar.Init(_personInThisCell);
     }
 
-    private void OnChoose(Person person)
+    public void OnChoose()
     {
-        _choosedPerson = person;
-        ChoosedPerson?.Invoke(_choosedPerson);
+        ChoosedPerson?.Invoke(_personInThisCell);
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        ChooseCard?.Invoke(this);
     }
 }

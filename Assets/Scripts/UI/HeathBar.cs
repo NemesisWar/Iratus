@@ -18,6 +18,10 @@ public class HeathBar : MonoBehaviour
     {
         _person = person;
         OnHealthChanged(_person.Health);
+        if (_person != null)
+        {
+            _person.ChangeHealth += OnHealthChanged;
+        }
     }
 
     private void OnEnable()

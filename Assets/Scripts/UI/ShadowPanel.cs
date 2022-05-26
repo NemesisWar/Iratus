@@ -29,12 +29,6 @@ public abstract class ShadowPanel : MonoBehaviour
     }
 
     protected abstract void GetColorComponent();
-    //if (GetComponent<Image>())
-    //    _color = GetComponent<Image>().color;
-    //if (GetComponent<RawImage>())
-    //    _color = GetComponent<RawImage>().color;
-    //if(GetComponent<SkeletonGraphic>())
-    //_color = GetComponent<SkeletonGraphic>().color;
 
     protected abstract void ChangeAlpha();
 }

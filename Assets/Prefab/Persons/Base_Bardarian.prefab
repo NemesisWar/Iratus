@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e598849e6d5d1347abe3224053ee79d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isWalked: 0
   _health: 100
   _stamina: 100
   _skeletonGraphic: {fileID: 5429131185122384946}
@@ -117,3 +118,5 @@ MonoBehaviour:
   - {fileID: -2559305736167126078, guid: e0dcd86bfdd74f04fb73cda836862efa, type: 3}
   - {fileID: -2361520172519423241, guid: 38fa5c2b89027824a89e38ec951c5410, type: 3}
   - {fileID: 8366281889315835832, guid: 5f839c5cf6765714d927d5daff956cbc, type: 3}
+  _damageAnimation: {fileID: 11400000, guid: db2ed890514cac446a7b4fad19cf8b30, type: 2}
+  _idle: {fileID: 11400000, guid: baad0bb604b9174439d256a9e919b17c, type: 2}

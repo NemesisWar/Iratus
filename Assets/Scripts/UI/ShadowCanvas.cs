@@ -8,13 +8,12 @@ public class ShadowCanvas : MonoBehaviour
 {
     public event UnityAction StartBattle;
 
-    private void Start()
+    public void ShadowWindows(Person attacker, Person defender)
     {
-
-    }
-
-    private void ShadowWindows()
-    {
+        attacker.gameObject.GetComponent<ShadowPanel>().enabled = false;
+        defender.gameObject.GetComponent<ShadowPanel>().enabled = false;
         StartBattle?.Invoke();
+        attacker.gameObject.GetComponent<ShadowPanel>().enabled = true;
+        defender.gameObject.GetComponent<ShadowPanel>().enabled = true;
     }
 }
