@@ -37,10 +37,10 @@ public class EnemyPanel : MonoBehaviour
         return _characterCards[numberCharacter];
     }
 
-    private void SetActivityMarkOnPerson(CharacterCard activityCard)
-    {
-        activityCard.PersonInThisCell.SetStatus();
-    }
+    //private void SetActivityMarkOnPerson(CharacterCard activityCard)
+    //{
+    //    activityCard.PersonInThisCell.SetStatus();
+    //}
 
     public CharacterCard TakeCard(int numberCharacter)
     {

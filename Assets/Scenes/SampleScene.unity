@@ -474,6 +474,7 @@ GameObject:
   - component: {fileID: 250832503}
   - component: {fileID: 250832502}
   - component: {fileID: 250832501}
+  - component: {fileID: 250832504}
   m_Layer: 5
   m_Name: MainPanel
   m_TagString: Untagged
@@ -598,9 +599,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fistState: {fileID: 250832498}
   _attacker: {fileID: 1644074424}
-  _swapAttacker: {fileID: 1307099858}
+  _swapPlayer: {fileID: 1307099858}
   _target: {fileID: 1054176629}
-  _swapTarget: {fileID: 1136120736}
+  _swapEnemy: {fileID: 1136120736}
   _abillity: {fileID: -2559305736167126078, guid: e0dcd86bfdd74f04fb73cda836862efa, type: 3}
 --- !u!114 &250832500
 MonoBehaviour:
@@ -614,8 +615,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d191f7778219804989a718c0a1efcc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerPanel: {fileID: 1545830955}
-  _enemyPanel: {fileID: 2134792541}
   _playerAttack: 1
   _attacker: {fileID: 0}
   _defender: {fileID: 0}
@@ -635,7 +634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 978e810f70baa084fbe2a74a978ac0d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetState: {fileID: 0}
+  _targetState: {fileID: 250832504}
 --- !u!114 &250832502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -664,6 +663,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetState: {fileID: 250832502}
+--- !u!114 &250832504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250832492}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69f0131383d48a24b80dc8e6e2b75710, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transitions: []
+  _randomSideSelection: {fileID: 250832500}
 --- !u!224 &339840580 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1769112108612229229, guid: 2e7d73d47fc7901429e59c6ef7b371da, type: 3}
@@ -1125,7 +1138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37979fea322feec43b341bb3911d4065, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinAlpha: 0.2
+  MinAlphaChanell: 0
+  MaxAlphaChanell: 1
 --- !u!114 &920595004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1360,6 +1374,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2134792537}
     m_Modifications:
+    - target: {fileID: 1644074424, guid: c1433e77937d1af439eeae6fa93998e3, type: 3}
+      propertyPath: _isEnemy
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1644074424, guid: c1433e77937d1af439eeae6fa93998e3, type: 3}
       propertyPath: _character
       value: 
@@ -1730,6 +1748,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2134792537}
     m_Modifications:
+    - target: {fileID: 1644074424, guid: c1433e77937d1af439eeae6fa93998e3, type: 3}
+      propertyPath: _isEnemy
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1644074424, guid: c1433e77937d1af439eeae6fa93998e3, type: 3}
       propertyPath: _character
       value: 
@@ -2111,7 +2133,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84e07b8a437eedb429a5f5171d6ce2bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinAlpha: 0.2
+  MinAlphaChanell: 0
+  MaxAlphaChanell: 1
 --- !u!1001 &1782337758
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2216,6 +2239,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2134792537}
     m_Modifications:
+    - target: {fileID: 1644074424, guid: c1433e77937d1af439eeae6fa93998e3, type: 3}
+      propertyPath: _isEnemy
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1644074424, guid: c1433e77937d1af439eeae6fa93998e3, type: 3}
       propertyPath: _character
       value: 
@@ -2576,6 +2603,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2134792537}
     m_Modifications:
+    - target: {fileID: 1644074424, guid: c1433e77937d1af439eeae6fa93998e3, type: 3}
+      propertyPath: _isEnemy
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1644074424, guid: c1433e77937d1af439eeae6fa93998e3, type: 3}
       propertyPath: _character
       value: 

@@ -25,6 +25,9 @@ public abstract class Transition : MonoBehaviour
     private void OnEnable()
     {
         NeedTransit = false;
+        GetData();
     }
+
+    protected abstract void GetData();
 
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class StopMoveTransition : Transition
 {
+    [SerializeField] private float _faultDistance;
     private RectTransform _attackerRect;
     private RectTransform _swapAttackerRect;
     private RectTransform _targerRect;
@@ -11,25 +12,25 @@ public class StopMoveTransition : Transition
     private Vector2 _destinationAttaker;
     private Vector2 _destinationTarget;
 
-    private void Start()
+    protected override void GetData()
     {
         _attackerRect = _attacker.GetComponent<RectTransform>();
         _swapAttackerRect = _swapAttacker.GetComponent<RectTransform>();
         _targerRect = _target.GetComponent<RectTransform>();
         _swapTargetRect = _swapTarget.GetComponent<RectTransform>();
-        _destinationAttaker = (Vector2)_swapAttackerRect.anchoredPosition;
-        _destinationTarget = (Vector2)_swapTargetRect.anchoredPosition;
-        //Debug.Log($"START{_attackerRect.anchoredPosition} {_destinationAttaker}");
-
+        _destinationAttaker = _swapAttackerRect.anchoredPosition;
+        _destinationTarget = _swapTargetRect.anchoredPosition;
     }
 
     private void Update()
     {
-        //Debug.Log($"{_attackerRect.anchoredPosition} {_destinationAttaker}");
-        if ((_attackerRect.anchoredPosition == _destinationAttaker) && (_targerRect.anchoredPosition == _destinationTarget))
+        //Debug.Log($"P{Vector2.Distance(_attackerRect.anchoredPosition, _destinationAttaker)}");
+        //Debug.Log($"E{Vector2.Distance(_targerRect.anchoredPosition, _destinationTarget)}");
+        
+        if((Vector2.Distance(_attackerRect.anchoredPosition, _destinationAttaker)< _faultDistance) && (Vector2.Distance(_targerRect.anchoredPosition, _destinationTarget) < _faultDistance))
         {
             NeedTransit = true;
             Debug.Log("STOP");
-        }          
+        }
     }
 }

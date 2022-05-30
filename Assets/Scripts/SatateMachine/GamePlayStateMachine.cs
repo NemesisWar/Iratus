@@ -8,23 +8,37 @@ public class GamePlayStateMachine : MonoBehaviour
     [SerializeField] private State _fistState;
     private State _currentState;
     [SerializeField] private CharacterCard _attacker;
-    [SerializeField] private CharacterCard _swapAttacker;
+    [SerializeField] private CharacterCard _swapPlayer;
     [SerializeField] private CharacterCard _target;
-    [SerializeField] private CharacterCard _swapTarget;
+    [SerializeField] private CharacterCard _swapEnemy;
     [SerializeField] private Abillity _abillity;
+    private CharacterCard _swapAttacker;
+    private CharacterCard _swapTarget;
 
     private void Start()
     {
-        Reset(_fistState);
+        //Reset(_fistState);
         //_fistState.Enter(_attacker, _swapAttacker, _target, _swapTarget, _abillity);
     }
 
     public void Init(CharacterCard attacker, CharacterCard target, Abillity abillity)
     {
+        Cursor.visible = false;
+        if (attacker.IsEnemy == false)
+        {
+            _swapAttacker = _swapPlayer;
+            _swapTarget = _swapEnemy;
+        }
+        if (attacker.IsEnemy == true)
+        {
+            _swapAttacker = _swapEnemy;
+            _swapTarget = _swapPlayer;
+        }
         _attacker = attacker;
         _target = target;
         _abillity = abillity;
         enabled = true;
+        Reset(_fistState);
     }
 
     private void Reset(State startState)

@@ -11,13 +11,12 @@ public class Person : MonoBehaviour
     public event UnityAction <int> ChangeHealth;
     public event UnityAction <int> ChangeStamina;
     public event UnityAction AttackCompleted;
+    public event UnityAction Die;
     public int Health => _health;
     public int Stamina => _stamina;
 
-    public bool IsWalked => _isWalked;
     public List<Abillity> Abillities => _abilities;
 
-    [SerializeField] private bool _isWalked;
     [SerializeField] private int _health;
     [SerializeField] private int _stamina;
     [SerializeField] private SkeletonGraphic _skeletonGraphic; //времянка
@@ -59,9 +58,9 @@ public class Person : MonoBehaviour
         _health -= damage;
         ChangeHealth?.Invoke(_health);
         PlayAnimation(_damageAnimation, false, 1f);
-        if (_health < 0)
+        if (_health <= 0)
         {
-            
+            Dead();
         }
     }
 
@@ -69,20 +68,10 @@ public class Person : MonoBehaviour
     {
         _stamina -= stamina;
         ChangeStamina?.Invoke(_stamina);
-        if (stamina < 0)
+        if (stamina > 100)
         {
-           
+            _stamina = 100;
         }
-    }
-
-    private void ResetStatus()
-    {
-        _isWalked = false;
-    }
-
-    public void SetStatus()
-    {
-        _isWalked = true;
     }
 
     public void Attack(Abillity abillity, Person person)
@@ -92,10 +81,19 @@ public class Person : MonoBehaviour
         SpendStamina(abillity.UseStamina);
     }
 
+    public void Baff(Abillity abillity)
+    {
+        SpendStamina(abillity.UseStamina);
+    }
+
     private void PlayAnimation(AnimationReferenceAsset animation, bool loop, float timeScale)
     {
         _skeletonGraphic.AnimationState.SetAnimation(0, animation, loop).TimeScale = timeScale;
     }
 
+    private void Dead()
+    {
+        Die?.Invoke();
+    }
 
 }

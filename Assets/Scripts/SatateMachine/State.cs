@@ -11,6 +11,7 @@ public abstract class State : MonoBehaviour
     protected CharacterCard _target { get; set; }
     protected Abillity _abillity { get; set; }
 
+    protected abstract void OnEnable();
     public void Enter(CharacterCard attacker, CharacterCard swapAttacker, CharacterCard target, CharacterCard swapTarget, Abillity abillity)
     {
         if(enabled == false)
@@ -24,8 +25,8 @@ public abstract class State : MonoBehaviour
 
             foreach(Transition transition in _transitions)
             {
-                transition.enabled = true;
                 transition.Init(_attacker, _swapAttacker, _target, _swapTarget, _abillity);
+                transition.enabled = true;
             }
         }
     }

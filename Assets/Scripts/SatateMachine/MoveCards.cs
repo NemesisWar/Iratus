@@ -11,7 +11,7 @@ public class MoveCards : State
     private RectTransform _targerRect;
     private RectTransform _swapTargetRect;
 
-    private void Start()
+    protected override void OnEnable()
     {
         _attackerRect = _attacker.GetComponent<RectTransform>();
         _swapAttackerRect = _swapAttacker.GetComponent<RectTransform>();

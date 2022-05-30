@@ -7,13 +7,26 @@ using UnityEngine.Events;
 public class ShadowCanvas : MonoBehaviour
 {
     public event UnityAction StartBattle;
+    public event UnityAction EndBattle;
 
     public void ShadowWindows(Person attacker, Person defender)
     {
-        attacker.gameObject.GetComponent<ShadowPanel>().enabled = false;
-        defender.gameObject.GetComponent<ShadowPanel>().enabled = false;
+        CheckPersons(attacker, defender, false);
         StartBattle?.Invoke();
-        attacker.gameObject.GetComponent<ShadowPanel>().enabled = true;
-        defender.gameObject.GetComponent<ShadowPanel>().enabled = true;
+        CheckPersons(attacker, defender, true);
+    }
+
+    private void CheckPersons(Person attacker, Person defender, bool setStatus)
+    {
+        if(attacker != null && defender != null)
+        {
+            attacker.gameObject.GetComponent<ShadowPanel>().enabled = setStatus;
+            defender.gameObject.GetComponent<ShadowPanel>().enabled = setStatus;
+        }
+    }
+
+    public void BrightWindows()
+    {
+        EndBattle?.Invoke();
     }
 }

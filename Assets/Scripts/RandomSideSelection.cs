@@ -5,8 +5,8 @@ using UnityEngine.Events;
 
 public class RandomSideSelection : MonoBehaviour
 {
-    [SerializeField] private PlayerPanel _playerPanel;
-    [SerializeField] private EnemyPanel _enemyPanel;
+    private PlayerPanel _playerPanel;
+    private EnemyPanel _enemyPanel;
     [SerializeField] private bool _playerAttack;
     [SerializeField] private CharacterCard _attacker;
     [SerializeField] private CharacterCard _defender;
@@ -19,8 +19,9 @@ public class RandomSideSelection : MonoBehaviour
 
     private void Awake()
     {
+        _playerPanel = GetComponentInChildren<PlayerPanel>();
+        _enemyPanel = GetComponentInChildren<EnemyPanel>();
         _cards.AddRange(_enemyPanel.GetComponentsInChildren<CharacterCard>());
-        //_chooseAbilities = GetComponentInChildren<ChooseAbilities>();
     }
 
     private void OnEnable()
@@ -48,10 +49,18 @@ public class RandomSideSelection : MonoBehaviour
             abilityCard.ChoosenAbility -= OnChooseAbillity;
         }
     }
+    public void Reset()
+    {
+        _attacker = null;
+        _defender = null;
+        _abillity = null;
+        _shadowCanvas.BrightWindows();
+        StartCoroutine(Testing());
+    }
 
     private IEnumerator Testing()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(1f);
         ChooseSide();
         _chooseAbilities = GetComponentInChildren<ChooseAbilities>(); //Времянка
         foreach (AbillityCard abilityCard in _chooseAbilities.AbillityCards)
@@ -98,8 +107,14 @@ public class RandomSideSelection : MonoBehaviour
 
     private void ChooseAIAbillity()
     {
-        int abillityNumber = Random.Range(0, _attacker.PersonInThisCell.Abillities.Count);
-        _abillity = _attacker.PersonInThisCell.Abillities[abillityNumber];
+        List<Abillity> abillities = new List<Abillity>();
+        foreach (var ability in _attacker.PersonInThisCell.Abillities)
+        {
+            if(_attacker.PersonInThisCell.Stamina>=ability.UseStamina)
+                abillities.Add(ability);
+        }
+        int abillityNumber = Random.Range(0, abillities.Count);
+        _abillity = abillities[abillityNumber];
         if (_abillity.IsBaf == true)
         {
             _defender = null;
@@ -109,18 +124,33 @@ public class RandomSideSelection : MonoBehaviour
             int personNumber = Random.Range(0, _playerPanel.CharactersInList());
             _defender = _playerPanel.GetCard(personNumber);
         }
-        
+        TryToStartBattle();
     }
 
     private void OnChooseEnemyCard(CharacterCard card) 
     {
         _defender = card;
-        _gamePlayStateMachine.Init(_attacker, _defender, _abillity);
-        _shadowCanvas.ShadowWindows(_attacker.PersonInThisCell,_defender.PersonInThisCell);
+        TryToStartBattle();
     }
 
     private void OnChooseAbillity(Abillity abillity)
     {
         _abillity = abillity;
+        TryToStartBattle();
+    }
+
+    private void TryToStartBattle()
+    {
+        if(_attacker != null && _defender!=null && _abillity != null)
+        {
+            _gamePlayStateMachine.Init(_attacker, _defender, _abillity);
+            _shadowCanvas.ShadowWindows(_attacker.PersonInThisCell, _defender.PersonInThisCell);
+        }
+
+        if(_attacker!=null && _abillity.IsBaf == true)
+        {
+            _gamePlayStateMachine.Init(_attacker, null, _abillity);
+            _shadowCanvas.ShadowWindows(_attacker.PersonInThisCell, null);
+        }
     }
 }

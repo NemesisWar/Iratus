@@ -4,8 +4,17 @@ using UnityEngine;
 
 public abstract class ShadowPanel : MonoBehaviour
 {
-    [SerializeField] protected float MinAlpha;
+    [SerializeField] protected float MinAlphaChanell;
+    [SerializeField] protected float MaxAlphaChanell;
     private ShadowCanvas _shadowCanvas;
+
+    private void OnValidate()
+    {
+        if (MaxAlphaChanell == 0f || MaxAlphaChanell>1)
+        {
+            MaxAlphaChanell = 1f;
+        }
+    }
 
     private void Awake()
     {
@@ -15,12 +24,14 @@ public abstract class ShadowPanel : MonoBehaviour
     private void OnEnable()
     {
         _shadowCanvas = GetComponentInParent<ShadowCanvas>();
-        _shadowCanvas.StartBattle += ChangeAlpha;
+        _shadowCanvas.StartBattle += MinAlpha;
+        _shadowCanvas.EndBattle+=MaxAlpha;
     }
 
     private void OnDisable()
     {
-        _shadowCanvas.StartBattle -= ChangeAlpha;
+        _shadowCanvas.StartBattle -= MinAlpha;
+        _shadowCanvas.EndBattle -= MaxAlpha;
     }
 
     private void Start()
@@ -30,5 +41,7 @@ public abstract class ShadowPanel : MonoBehaviour
 
     protected abstract void GetColorComponent();
 
-    protected abstract void ChangeAlpha();
+    protected abstract void MinAlpha();
+
+    protected abstract void MaxAlpha();
 }

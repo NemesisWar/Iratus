@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class AttackState : State
 {
-    private void Start()
+    protected override void OnEnable()
     {
-        _attacker.PersonInThisCell.GetComponent<Person>().Attack(_abillity,_target.PersonInThisCell.GetComponent<Person>());
+        _attacker.PersonInThisCell.GetComponent<Person>().Attack(_abillity, _target.PersonInThisCell.GetComponent<Person>());
     }
 }

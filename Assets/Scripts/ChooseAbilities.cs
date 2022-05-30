@@ -47,12 +47,17 @@ public class ChooseAbilities : MonoBehaviour
     private void ShowAllAbilities(Person person)
     {
         HideAllAbillityCard();
-        List<Abillity> abilities = new List<Abillity>();
-        abilities = person.Abillities;
-        for (int i = 0; i < abilities.Count; i++)
+        //List<Abillity> abilities = new List<Abillity>();
+        //abilities = person.Abillities;
+        for (int i = 0; i < person.Abillities.Count; i++)
         {
-            _abillityCards[i].gameObject.SetActive(true);
-            _abillityCards[i].Init(abilities[i]);
+            if (person.Abillities[i].UseStamina < person.Stamina)
+            {
+                _abillityCards[i].gameObject.SetActive(true);
+                _abillityCards[i].Init(person.Abillities[i]);
+            }
+            //_abillityCards[i].gameObject.SetActive(true);
+            //_abillityCards[i].Init(abilities[i]);
         }
     }
 }
