@@ -49,4 +49,5 @@ MonoBehaviour:
   _description: Using a lot of stamina
   _isBaff: 0
   _useStamina: 50
-  _damage: 40
+  _damage: 20
+  SkeletonGraphic: {fileID: 0}

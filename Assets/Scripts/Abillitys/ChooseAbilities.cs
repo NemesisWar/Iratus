@@ -21,6 +21,11 @@ public class ChooseAbilities : MonoBehaviour
         {
             character.ChoosedPerson += ShowAllAbilities;
         }
+
+        foreach (var card in _abillityCards)
+        {
+            card.ChangeVisial += OnChangeVisual;
+        }
     }
 
     private void Start()
@@ -33,6 +38,11 @@ public class ChooseAbilities : MonoBehaviour
         foreach (var character in _characters)
         {
             character.ChoosedPerson -= ShowAllAbilities;
+        }
+
+        foreach (var card in _abillityCards)
+        {
+            card.ChangeVisial -= OnChangeVisual;
         }
     }
 
@@ -47,8 +57,6 @@ public class ChooseAbilities : MonoBehaviour
     private void ShowAllAbilities(Person person)
     {
         HideAllAbillityCard();
-        //List<Abillity> abilities = new List<Abillity>();
-        //abilities = person.Abillities;
         for (int i = 0; i < person.Abillities.Count; i++)
         {
             if (person.Abillities[i].UseStamina < person.Stamina)
@@ -56,8 +64,14 @@ public class ChooseAbilities : MonoBehaviour
                 _abillityCards[i].gameObject.SetActive(true);
                 _abillityCards[i].Init(person.Abillities[i]);
             }
-            //_abillityCards[i].gameObject.SetActive(true);
-            //_abillityCards[i].Init(abilities[i]);
+        }
+    }
+
+    private void OnChangeVisual()
+    {
+        foreach (var card in _abillityCards)
+        {
+            card.SetDefaultColor();
         }
     }
 }

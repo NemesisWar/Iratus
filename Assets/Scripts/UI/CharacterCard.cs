@@ -10,19 +10,23 @@ public class CharacterCard : MonoBehaviour, IPointerClickHandler
     public event UnityAction<CharacterCard> ChooseCard;
     public event UnityAction<Person> ChoosedPerson;
     public bool IsEnemy => _isEnemy;
-    [SerializeField] public Person PersonInThisCell => _personInThisCell;
+    public bool IsWalkied => _isWalked;
+    public Person PersonInThisCell => _personInThisCell;
     [SerializeField] private Person _character;
     [SerializeField] private GameObject _container;
     [SerializeField] private bool _isEnemy;
     private Person _personInThisCell;
     private HeathBar _healthBar;
     private StaminaBar _staminaBar;
+    private IndicatorChoosedPlayer _indicatorChoosedPlayer;
+    private bool _isWalked;
 
 
     private void OnEnable()
     {
         _healthBar = GetComponentInChildren<HeathBar>();
         _staminaBar = GetComponentInChildren<StaminaBar>();
+        _indicatorChoosedPlayer = GetComponentInChildren<IndicatorChoosedPlayer>();
     }
 
     private void OnDisable()
@@ -32,7 +36,6 @@ public class CharacterCard : MonoBehaviour, IPointerClickHandler
             _personInThisCell.Die -= OnDie;
         }
     }
-
 
     private void Start()
     {
@@ -49,10 +52,13 @@ public class CharacterCard : MonoBehaviour, IPointerClickHandler
         _personInThisCell.Die += OnDie;
         _healthBar.Init(_personInThisCell);
         _staminaBar.Init(_personInThisCell);
+        //_indicatorChoosedPlayer.Init(this);
     }
 
     public void OnChoose()
     {
+        _indicatorChoosedPlayer.gameObject.SetActive(true);
+        _isWalked = true;
         ChoosedPerson?.Invoke(_personInThisCell);
     }
 
@@ -64,5 +70,10 @@ public class CharacterCard : MonoBehaviour, IPointerClickHandler
     private void OnDie()
     {
         gameObject.SetActive(false);
+    }
+
+    public void ResetStatus()
+    {
+        _isWalked = false;
     }
 }

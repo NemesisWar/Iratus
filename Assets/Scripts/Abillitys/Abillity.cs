@@ -19,7 +19,4 @@ public class Abillity : MonoBehaviour
     [SerializeField] private bool _isBaff;
     [SerializeField] private int _useStamina;
     [SerializeField] private int _damage;
-    [SerializeField] private SkeletonGraphic SkeletonGraphic;
-    private Person _person;
-
 }

@@ -4,46 +4,58 @@ using UnityEngine;
 
 public class PlayerPanel : MonoBehaviour
 {
-    [SerializeField]private List<CharacterCard> _characterCards = new List<CharacterCard>();
-    private bool _allCompletedActivities;
+    private List<CharacterCard> _characterCards = new List<CharacterCard>();
+    private List<CharacterCard> _charactersInTurnQueue = new List<CharacterCard>();
 
     private void Awake()
     {
         _characterCards.AddRange(GetComponentsInChildren<CharacterCard>());
     }
 
-    private void UpdateList()
+    public void ResetWent()
+    {
+        foreach (var character in _characterCards)
+        {
+            character.ResetStatus();
+        }
+    }
+
+    public bool EveryoneWent()
+    {
+        UpdateCharInTirnQueue();
+        return _charactersInTurnQueue.Count == 0;
+    }
+
+    public CharacterCard GetDefenderCard()
     {
         List<CharacterCard> list = new List<CharacterCard>();
         foreach (CharacterCard card in _characterCards)
         {
-            if(card.gameObject.activeSelf == true)
+            if (card.gameObject.activeSelf == true)
             {
                 list.Add(card);
             }
         }
         _characterCards = list;
+        return _characterCards[Random.Range(0, _characterCards.Count)];
     }
 
-    public int CharactersInList()
+    public void UpdateCharInTirnQueue()
     {
-        UpdateList();
-        return _characterCards.Count;
+        List<CharacterCard> list = new List<CharacterCard>();
+        foreach (CharacterCard card in _characterCards)
+        {
+            if (card.gameObject.activeSelf == true && card.IsWalkied == false)
+            {
+                list.Add(card);
+            }
+        }
+        _charactersInTurnQueue = list;
     }
 
-    public CharacterCard GetCard(int numberCharacter)
+    public CharacterCard GetRandomAttackerCard()
     {
-        //SetActivityMarkOnPerson(_characterCards[numberCharacter]);
-        return _characterCards[numberCharacter];
-    }
-
-    //private void SetActivityMarkOnPerson(CharacterCard activityCard)
-    //{
-    //    activityCard.PersonInThisCell.SetStatus();
-    //}
-
-    public CharacterCard TakeCard(int numberCharacter)
-    {
-        return _characterCards[numberCharacter];
+        UpdateCharInTirnQueue();
+        return _charactersInTurnQueue[Random.Range(0, _charactersInTurnQueue.Count)];
     }
 }

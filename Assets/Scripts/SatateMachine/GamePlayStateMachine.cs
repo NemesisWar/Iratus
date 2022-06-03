@@ -6,20 +6,14 @@ public class GamePlayStateMachine : MonoBehaviour
 {
     public State CurrentState => _currentState;
     [SerializeField] private State _fistState;
-    private State _currentState;
-    [SerializeField] private CharacterCard _attacker;
     [SerializeField] private CharacterCard _swapPlayer;
-    [SerializeField] private CharacterCard _target;
     [SerializeField] private CharacterCard _swapEnemy;
-    [SerializeField] private Abillity _abillity;
+    private Abillity _abillity;
+    private State _currentState;
+    private CharacterCard _attacker;
+    private CharacterCard _target;
     private CharacterCard _swapAttacker;
     private CharacterCard _swapTarget;
-
-    private void Start()
-    {
-        //Reset(_fistState);
-        //_fistState.Enter(_attacker, _swapAttacker, _target, _swapTarget, _abillity);
-    }
 
     public void Init(CharacterCard attacker, CharacterCard target, Abillity abillity)
     {
@@ -58,7 +52,6 @@ public class GamePlayStateMachine : MonoBehaviour
         State nextState = _currentState.GetNextState();
         if (nextState != null)
             Transit(nextState);
-
     }
 
     private void Transit(State nextState)
@@ -67,9 +60,7 @@ public class GamePlayStateMachine : MonoBehaviour
         {
             _currentState.Exit();
         }
-
         _currentState = nextState;
-
         if (_currentState != null)
         {
             _currentState.Enter(_attacker, _swapAttacker, _target, _swapTarget, _abillity);

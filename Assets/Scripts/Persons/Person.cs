@@ -19,15 +19,17 @@ public class Person : MonoBehaviour
 
     [SerializeField] private int _health;
     [SerializeField] private int _stamina;
-    [SerializeField] private SkeletonGraphic _skeletonGraphic; //времянка
+    [SerializeField] private SkeletonGraphic _skeletonGraphic;
     [SerializeField] private List <Abillity> _abilities;
     [SerializeField] private AnimationReferenceAsset _damageAnimation;
     [SerializeField] private AnimationReferenceAsset _idle;
+    private Person _enemyPerson = null;
+    private Abillity _attackAbillity = null;
    
 
     private void Start()
     {
-        _skeletonGraphic.AnimationState.Event += HandleEvent;
+        _skeletonGraphic.AnimationState.Event += AnimationEvent;
         _skeletonGraphic.AnimationState.Complete += OnComplete ;
     }
 
@@ -37,11 +39,11 @@ public class Person : MonoBehaviour
         AttackCompleted?.Invoke();
     }
 
-    private void HandleEvent(TrackEntry trackEntry, Spine.Event e)
+    private void AnimationEvent(TrackEntry trackEntry, Spine.Event e)
     {
         if (e.Data.Name == "Hit")
         {
-            Debug.Log("Damage_anim");
+            _enemyPerson.TakeDamage(_attackAbillity.Damage);
         }
     }
 
@@ -55,9 +57,9 @@ public class Person : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        PlayAnimation(_damageAnimation, false, 1f);
         _health -= damage;
         ChangeHealth?.Invoke(_health);
-        PlayAnimation(_damageAnimation, false, 1f);
         if (_health <= 0)
         {
             Dead();
@@ -76,9 +78,17 @@ public class Person : MonoBehaviour
 
     public void Attack(Abillity abillity, Person person)
     {
-        PlayAnimation(abillity.AnimationReferenceAsset, false, 1f);
-        person.TakeDamage(abillity.Damage);
-        SpendStamina(abillity.UseStamina);
+        ClearAbilityAndEnemy();
+        _enemyPerson = person;
+        _attackAbillity = abillity;
+        PlayAnimation(_attackAbillity.AnimationReferenceAsset, false, 1f);
+        SpendStamina(_attackAbillity.UseStamina);
+    }
+
+    private void ClearAbilityAndEnemy()
+    {
+        _enemyPerson = null;
+        _attackAbillity = null;
     }
 
     public void Baff(Abillity abillity)

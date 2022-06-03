@@ -24,7 +24,6 @@ public class StaminaBar : MonoBehaviour
         }
     }
 
-
     private void OnDisable()
     {
         if (_person != null)

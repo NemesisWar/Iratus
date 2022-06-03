@@ -23,14 +23,10 @@ public class StopMoveTransition : Transition
     }
 
     private void Update()
-    {
-        //Debug.Log($"P{Vector2.Distance(_attackerRect.anchoredPosition, _destinationAttaker)}");
-        //Debug.Log($"E{Vector2.Distance(_targerRect.anchoredPosition, _destinationTarget)}");
-        
+    {     
         if((Vector2.Distance(_attackerRect.anchoredPosition, _destinationAttaker)< _faultDistance) && (Vector2.Distance(_targerRect.anchoredPosition, _destinationTarget) < _faultDistance))
         {
             NeedTransit = true;
-            Debug.Log("STOP");
         }
     }
 }
